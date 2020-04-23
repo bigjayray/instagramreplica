@@ -15,15 +15,16 @@
       <header>
         <!-- navigation bar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">Task Management System</a>
+          <a class="navbar-brand" href="/">Instagram Replica</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
             {% if user %}
-            <a class="nav-item nav-link" href="/createtaskboard">Create TaskBoard</a>
-            <a class="nav-item nav-link" href="/viewtaskboard">View TaskBoards</a>
+            <a class="nav-item nav-link" href="/createpost">Create Post</a>
+            <a class="nav-item nav-link" href="/search">Search</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
             {% endif %}
             </div>
           </div>
@@ -32,7 +33,7 @@
       <main>
         <div class="jumbotron">
           <h1 class="display-4">Hello!</h1>
-          <p class="lead">This is a task management system that can deal with tasks of multiple users</p>
+          <p class="lead">This is a simplified replica of Instagram</p>
           <hr class="my-4">
           {% if user %}
           <p>{{ welcome }} {{ user.email() }} to the application.</p>
@@ -50,18 +51,18 @@
           <div class="col-sm-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">New TaskBoard</h5>
-                <p class="card-text">To create a new task board</p>
-                <a href="/createtaskboard" class="btn btn-info">Create</a>
+                <h5 class="card-title">New Post</h5>
+                <p class="card-text">To create a new post</p>
+                <a href="/createpost" class="btn btn-info">Create</a>
               </div>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">View TaskBoards</h5>
-                <p class="card-text">To view created task boards </p>
-                <a href="/viewtaskboard" class="btn btn-info">View</a>
+                <h5 class="card-title">Search</h5>
+                <p class="card-text">To search for users </p>
+                <a href="/search" class="btn btn-info">Search</a>
               </div>
             </div>
           </div>

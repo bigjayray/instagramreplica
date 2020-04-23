@@ -8,9 +8,11 @@ class User(ndb.Model):
     email_address = ndb.StringProperty()
     following = ndb.KeyProperty(kind='User', repeated=True)
     followers = ndb.KeyProperty(kind='User', repeated=True)
+    posts = ndb.KeyProperty(kind='Posts', repeated=True)
 
 class Posts(ndb.Model):
     # A model for representing a post
     #posts attributes
     image = ndb.BlobKeyProperty()
     caption = ndb.StringProperty()
+    comments = ndb.StringProperty()

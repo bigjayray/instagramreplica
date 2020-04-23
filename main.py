@@ -6,6 +6,8 @@ from google.appengine.ext import ndb
 import os
 
 from model import User
+from createpost import CreatePost
+from uploadhandler import UploadHandler
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -66,5 +68,7 @@ class MainPage(webapp2.RequestHandler):
 
 # specify the full routing table
 app = webapp2.WSGIApplication([
-    ('/', MainPage)
+    ('/', MainPage),
+    ('/createpost', CreatePost),
+    ('/upload', UploadHandler)
 ], debug=True)
