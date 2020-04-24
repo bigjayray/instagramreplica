@@ -4,6 +4,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api.images import get_serving_url
 from model import Posts
 from model import User
 
@@ -24,6 +25,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
         post.image = upload.key()
         post.caption = self.request.get('caption')
+        # post.img_url = get_serving_url(upload.key())
         post_key = post.put()
 
         myuser.posts.append(post_key)

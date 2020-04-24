@@ -22,9 +22,9 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
             {% if user %}
-            <a class="nav-item nav-link" href="/createpost">Create Post</a>
+            <a class="nav-item nav-link" href="/createpost">New Post</a>
             <a class="nav-item nav-link" href="/search">Search</a>
-            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/profile?key={{ myuser.key.urlsafe() }}">Profile</a>
             {% endif %}
             </div>
           </div>

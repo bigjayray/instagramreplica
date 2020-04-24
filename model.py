@@ -16,3 +16,5 @@ class Posts(ndb.Model):
     image = ndb.BlobKeyProperty()
     caption = ndb.StringProperty()
     comments = ndb.StringProperty()
+    # img_url = ndb.StringProperty()
+    create_date = ndb.DateTimeProperty(auto_now_add=True)

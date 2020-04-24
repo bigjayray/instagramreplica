@@ -8,6 +8,8 @@ import os
 from model import User
 from createpost import CreatePost
 from uploadhandler import UploadHandler
+from profile import Profile
+from search import Search
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -59,7 +61,7 @@ class MainPage(webapp2.RequestHandler):
             'url_string' : url_string,
             'user' : user,
             'welcome' : welcome,
-            'myuser' : myuser
+            'myuser' : myuser        
         }
 
         template = JINJA_ENVIRONMENT.get_template('main.html')
@@ -70,5 +72,7 @@ class MainPage(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/createpost', CreatePost),
-    ('/upload', UploadHandler)
+    ('/upload', UploadHandler),
+    ('/profile', Profile),
+    ('/search', Search)
 ], debug=True)
