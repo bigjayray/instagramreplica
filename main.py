@@ -14,6 +14,8 @@ from uploadhandler import UploadHandler
 from profile import Profile
 from search import Search
 from follow import Follow
+from followers import Followers
+from following import Following
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -92,5 +94,7 @@ app = webapp2.WSGIApplication([
     ('/upload', UploadHandler),
     ('/profile', Profile),
     ('/search', Search),
-    ('/follow', Follow)
+    ('/follow', Follow),
+    ('/followers', Followers),
+    ('/following', Following)
 ], debug=True)

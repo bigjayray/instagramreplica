@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Profile</title>
+    <title>Following</title>
   </head>
   <body>
     <div class="container-fluid">
@@ -32,27 +32,13 @@
       </header>
       <main>
         <div class="card">
-          <h5 class="card-header">{{ muser.email_address }}
-            {% if muser != myuser %}
-              {% if following %}
-                <a class="btn btn-primary" href="{{ url }}">Following</a>
-              {% else %}
-                <a class="btn btn-primary" href="/follow?me={{ myuser.key.urlsafe() }}&you={{ muser.key.urlsafe() }}">Follow</a>
-              {% endif %}
-            {% endif %}
-          </h5>
+          <h5 class="card-header">Following</h5>
           <div class="card-body">
-            <h5 class="card-title">Posts: {{ nposts }} Followers: <span><a href="/followers?key={{ muser.key.urlsafe() }}">{{ nfollowers }}</a></span> Following: <span><a href="/following?key={{ muser.key.urlsafe() }}">{{ nfollowing }}</a></span></h5>
+            <h5 class="card-title"></h5>
             <p class="card-text"></p>
-            <div class="row p-2">
-              {% for i in posts|sort(reverse=true, attribute='create_date') %}
-              <div class="card col-sm-4 p-4" style="width: 18rem;">
-                <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
-                <div class="card-body">
-                  <p class="card-text">Caption: {{ i.caption }}</p>
-                  <p>Comments:</p>
-                </div>
-              </div>
+            <div class="list-group">
+              {% for i in following %}
+              <a href="/profile?key={{ i.urlsafe() }}" class="list-group-item list-group-item-action">{{ i.get().email_address }}</a>
               {% endfor %}
             </div>
           </div>
