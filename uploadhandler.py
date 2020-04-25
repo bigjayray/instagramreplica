@@ -25,7 +25,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
         post.image = upload.key()
         post.caption = self.request.get('caption')
-        # post.img_url = get_serving_url(upload.key())
+        post.user = myuser_key
         post_key = post.put()
 
         myuser.posts.append(post_key)

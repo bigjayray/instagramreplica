@@ -32,16 +32,24 @@
       </header>
       <main>
         <div class="card">
-          <h5 class="card-header">{{ muser.email_address }}</h5>
+          <h5 class="card-header">{{ muser.email_address }}
+            {% if muser != myuser %}
+              {% if following %}
+                <a class="btn btn-primary" href="{{ url }}">Following</a>
+              {% else %}
+                <a class="btn btn-primary" href="/follow?me={{ myuser.key.urlsafe() }}&you={{ muser.key.urlsafe() }}">Follow</a>
+              {% endif %}
+            {% endif %}
+          </h5>
           <div class="card-body">
             <h5 class="card-title">Posts: {{ nposts }} Followers: <span><a href="#">{{ nfollowers }}</a></span> Following: <span><a href="#">{{ nfollowing }}</a></span></h5>
             <p class="card-text"></p>
-            <div class="row">
-              {% for i in posts|reverse %}
-              <div class="card col-sm-4 p-2" style="width: 28rem;">
-                <img src="{{ get_serving_url(i.get().image) }}" class="card-img-top" alt="images">
+            <div class="row p-2">
+              {% for i in posts|sort(reverse=true, attribute='create_date') %}
+              <div class="card col-sm-4 p-4" style="width: 18rem;">
+                <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
                 <div class="card-body">
-                  <p class="card-text">Caption: {{ i.get().caption }}</p>
+                  <p class="card-text">Caption: {{ i.caption }}</p>
                   <p>Comments:</p>
                 </div>
               </div>

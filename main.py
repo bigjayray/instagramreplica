@@ -3,13 +3,17 @@ import webapp2
 import jinja2
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from google.appengine.api.images import get_serving_url
 import os
+import itertools
 
 from model import User
+from model import Posts
 from createpost import CreatePost
 from uploadhandler import UploadHandler
 from profile import Profile
 from search import Search
+from follow import Follow
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -29,6 +33,7 @@ class MainPage(webapp2.RequestHandler):
         url_string = ''
         welcome = 'Welcome back'
         myuser = None
+        posts = []
 
         #gets current user
         user = users.get_current_user()
@@ -51,9 +56,19 @@ class MainPage(webapp2.RequestHandler):
                 myuser.email_address = user.email()
                 #saves user to datastore
                 myuser.put()
+
+            for i in myuser.following:
+                q = Posts.query().filter(Posts.user == i).fetch()
+                for i in q:
+                    posts.append(i)
+            for i in myuser.posts:
+                posts.append(i.get())
+
+
         else:
             url = users.create_login_url(self.request.uri)
             url_string = 'login'
+
 
         #assign template values to be rendered to the html page
         template_values = {
@@ -61,7 +76,9 @@ class MainPage(webapp2.RequestHandler):
             'url_string' : url_string,
             'user' : user,
             'welcome' : welcome,
-            'myuser' : myuser        
+            'myuser' : myuser,
+            'posts' : posts,
+            'get_serving_url' : get_serving_url
         }
 
         template = JINJA_ENVIRONMENT.get_template('main.html')
@@ -74,5 +91,6 @@ app = webapp2.WSGIApplication([
     ('/createpost', CreatePost),
     ('/upload', UploadHandler),
     ('/profile', Profile),
-    ('/search', Search)
+    ('/search', Search),
+    ('/follow', Follow)
 ], debug=True)

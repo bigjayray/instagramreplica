@@ -23,16 +23,23 @@ class Profile(webapp2.RequestHandler):
 
         # gets user
         k_str = self.request.get('key')
+        key = ndb.Key(urlsafe=k_str)
 
-        muser = ndb.Key(urlsafe=k_str).get()
+        muser = key.get()
 
-        posts = muser.posts
+        posts = ndb.get_multi(muser.posts)
 
         nposts = len(muser.posts)
         nfollowers = len(muser.followers)
         nfollowing = len(muser.following)
 
         myuser = ndb.Key('User', user.user_id()).get()
+
+        following = False
+
+        for i in myuser.following:
+            if i == key:
+                following = True
 
         #assign template values to be rendered to the html page
         template_values = {
@@ -43,7 +50,8 @@ class Profile(webapp2.RequestHandler):
             'nfollowing' : nfollowing,
             'get_serving_url' : get_serving_url,
             'myuser' : myuser,
-            'muser' : muser
+            'muser' : muser,
+            'following' : following
         }
 
         template = JINJA_ENVIRONMENT.get_template('profile.html')

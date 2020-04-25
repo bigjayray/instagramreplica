@@ -46,29 +46,20 @@
           </p>
         </div>
         <!-- cards with links to create taskboard and view taskboards -->
-        <div class="row">
-          {% if user %}
-          <div class="col-sm-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">New Post</h5>
-                <p class="card-text">To create a new post</p>
-                <a href="/createpost" class="btn btn-info">Create</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Search</h5>
-                <p class="card-text">To search for users </p>
-                <a href="/search" class="btn btn-info">Search</a>
-              </div>
+        <div class="">
+          {% for i in posts|sort(reverse=true, attribute='create_date') %}
+          {% if loop.index <= 50 %}
+          <div class="card mx-auto p-4 my-4" style="width: 28rem;">
+            <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
+            <div class="card-body">
+              <p class="card-text">{{ i.user.get().email_address }}: {{ i.caption }}</p>
+              <p>Comments:</p>
             </div>
           </div>
           {% endif %}
+          {% endfor %}
         </div>
-        </div>
+
       </main>
     </div>
     <!-- JavaScript -->
