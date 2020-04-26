@@ -10,11 +10,11 @@
 
     <title>Profile</title>
   </head>
-  <body>
+  <body class="bg-light" style="padding-top: 4em">
     <div class="container-fluid">
       <header>
         <!-- navigation bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-light bg-white fixed-top navbar-expand-lg">
           <a class="navbar-brand" href="/">Instagram Replica</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,7 +42,7 @@
             {% endif %}
           </h5>
           <div class="card-body">
-            <h5 class="card-title">Posts: {{ nposts }} Followers: <span><a href="/followers?key={{ muser.key.urlsafe() }}">{{ nfollowers }}</a></span> Following: <span><a href="/following?key={{ muser.key.urlsafe() }}">{{ nfollowing }}</a></span></h5>
+            <h5 class="card-title">Posts: {{ nposts }} <span class="px-4">Followers: <a href="/followers?key={{ muser.key.urlsafe() }}">{{ nfollowers }}</a></span><span>Following:<a href="/following?key={{ muser.key.urlsafe() }}">{{ nfollowing }}</a></span></h5>
             <p class="card-text"></p>
             <div class="row p-2">
               {% for i in posts|sort(reverse=true, attribute='create_date') %}
@@ -50,8 +50,15 @@
                 <img src="{{ get_serving_url(i.image) }}" class="card-img-top img-fluid" alt="images">
                 <div class="card-body">
                   <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.caption }}</p>
+
+                  {% if i.comments|count > 5%}
+                  <p><a href="/post?key={{ i.key.urlsafe() }}" class="text-muted">View all comments</a></p>
+                  {% endif %}
+
                   {% for i in i.comments|sort(reverse=true, attribute='create_date') %}
+                  {% if loop.index <= 5 %}
                   <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>
+                  {% endif %}
                   {% endfor %}
                   <form action="/comment" method="post">
                     <div class="input-group mb-3">

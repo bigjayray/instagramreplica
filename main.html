@@ -10,51 +10,55 @@
 
     <title>Home Page</title>
   </head>
-  <body>
+  <body class="bg-light" style="padding-top: 4em">
     <div class="container-fluid">
       <header>
         <!-- navigation bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-light bg-white fixed-top navbar-expand-lg">
           <a class="navbar-brand" href="/">Instagram Replica</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav mr-auto">
             {% if user %}
             <a class="nav-item nav-link" href="/createpost">New Post</a>
             <a class="nav-item nav-link" href="/search">Search</a>
             <a class="nav-item nav-link" href="/profile?key={{ myuser.key.urlsafe() }}">Profile</a>
             {% endif %}
             </div>
+            <!-- login / logout button -->
+            <a class="btn btn-outline-dark" href="{{ url }}">{{ url_string }}</a>
           </div>
         </nav>
       </header>
       <main>
-        <div class="jumbotron">
+        {% if user %}
+        {% else %}
+        <div class="jumbotron bg-white text-dark my-0">
           <h1 class="display-4">Hello!</h1>
           <p class="lead">This is a simplified replica of Instagram</p>
           <hr class="my-2">
-          {% if user %}
-          <p>{{ welcome }} {{ user.email() }} to the application.</p>
-          {% else %}
           <p>Welcome to the application. To access all feature you need to login.</p>
           {% endif %}
-          <p class="lead">
-            <!-- login / logout button -->
-            <a class="btn btn-lg btn-outline-dark" href="{{ url }}">{{ url_string }}</a>
-          </p>
         </div>
         <!-- posts -->
         <section>
           {% for i in posts|sort(reverse=true, attribute='create_date') %}
           {% if loop.index <= 50 %}
-          <div class="card mx-auto p-4 my-4" style="width: 28rem;">
+          <div class="card mx-auto p-4 my-4" style="width: 38rem;">
             <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
             <div class="card-body">
               <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.caption }}</p>
+
+              {% if i.comments|count > 5%}
+              <p><a href="/post?key={{ i.key.urlsafe() }}" class="text-muted">View all comments</a></p>
+              {% endif %}
+
               {% for i in i.comments|sort(reverse=true, attribute='create_date') %}
+              {% if loop.index <= 5 %}
               <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>
+              {% endif %}
               {% endfor %}
               <form action="/comment" method="post">
                 <div class="input-group mb-3">

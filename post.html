@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Search</title>
+    <title>Post</title>
   </head>
   <body class="bg-light" style="padding-top: 4em">
     <div class="container-fluid">
@@ -32,26 +32,27 @@
       </header>
       <main>
         <div class="card">
-          <h5 class="card-header">Search</h5>
+          <h5 class="card-header">Post</h5>
           <div class="card-body">
-            <form action="/search" method="post">
-              <div class="row">
-                <div class="input-group mb-3 col-sm-6 mx-auto">
-                  <input type="text" class="form-control" name="username" placeholder="username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <input type="submit" name="button" value="Search" class="btn btn-primary">
+            <div class="card mx-auto p-4 my-4" style="width: 38rem;">
+              <img src="{{ get_serving_url(post.image) }}" class="card-img-top" alt="images">
+              <div class="card-body">
+                <p class="card-text"><span class="font-weight-bold">{{ post.user.get().email_address }}</span> {{ post.caption }}</p>
+                {% for i in post.comments|sort(reverse=true, attribute='create_date') %}
+                <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>
+                {% endfor %}
+                <form action="/comment" method="post">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="comment" placeholder="Add a comment..." aria-label="Comment" aria-describedby="button-addon2" maxlength="200">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="submit" name="Button" value="Comment"id="button-addon2">Post</button>
+                    </div>
                   </div>
-                </div>
+                  <input type="hidden" name="key" value="{{ myuser.key.urlsafe() }}">
+                  <input type="hidden" name="post" value="{{ post.key.urlsafe() }}">
+                </form>
               </div>
-            </form>
-
-            {% if result %}
-              <h5 class="card-title">Search Result:</h5>
-              {% for i in result %}
-              <h6 class="card-text"><a href="/profile?key={{ i.key.urlsafe() }}">{{ i.email_address }}</a></h6>
-              {% endfor %}
-            {% endif %}
-
+            </div>
           </div>
         </div>
 

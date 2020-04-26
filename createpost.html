@@ -10,11 +10,11 @@
 
     <title>Create Post</title>
   </head>
-  <body>
+  <body class="bg-light" style="padding-top: 4em">
     <div class="container-fluid">
       <header>
         <!-- navigation bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-light bg-white fixed-top navbar-expand-lg">
           <a class="navbar-brand" href="/">Instagram Replica</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,18 +34,19 @@
         <div class="card">
           <h5 class="card-header">New Post</h5>
           <div class="card-body">
-            <h5 class="card-title">Create a new post</h5>
             <p class="card-text">Add image and caption and click on post to create new post</p>
             <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
-              <div class="form-group">
-                <label>Image</label>
-                <input type="file" class="form-control-file" name="file" accept="image/*">
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <label>Image</label>
+                  <input type="file" class="form-control-file" name="file" accept="image/*">
+                </div>
+                <div class="form-group col-sm-9">
+                  <label>Caption</label>
+                  <input type="text" class="form-control" name="caption" placeholder="Write a caption...">
+                </div>
               </div>
-              <div class="form-group">
-                <label>Caption</label>
-                <input type="text" class="form-control-file" name="caption">
-              </div>
-              <input type="submit" name="button" value="Post" class="btn btn-lg btn-primary">
+              <input type="submit" name="button" value="Share" class="btn btn-primary">
             </form>
           </div>
         </div>
