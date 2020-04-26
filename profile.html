@@ -35,7 +35,7 @@
           <h5 class="card-header">{{ muser.email_address }}
             {% if muser != myuser %}
               {% if following %}
-                <a class="btn btn-primary" href="{{ url }}">Following</a>
+                <a class="btn btn-primary disabled" href="#">Following</a>
               {% else %}
                 <a class="btn btn-primary" href="/follow?me={{ myuser.key.urlsafe() }}&you={{ muser.key.urlsafe() }}">Follow</a>
               {% endif %}
@@ -47,10 +47,22 @@
             <div class="row p-2">
               {% for i in posts|sort(reverse=true, attribute='create_date') %}
               <div class="card col-sm-4 p-4" style="width: 18rem;">
-                <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
+                <img src="{{ get_serving_url(i.image) }}" class="card-img-top img-fluid" alt="images">
                 <div class="card-body">
-                  <p class="card-text">Caption: {{ i.caption }}</p>
-                  <p>Comments:</p>
+                  <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.caption }}</p>
+                  {% for i in i.comments|sort(reverse=true, attribute='create_date') %}
+                  <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>
+                  {% endfor %}
+                  <form action="/comment" method="post">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" name="comment" placeholder="Add a comment..." aria-label="Comment" aria-describedby="button-addon2" maxlength="200">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="Button" value="Comment"id="button-addon2">Post</button>
+                      </div>
+                    </div>
+                    <input type="hidden" name="key" value="{{ myuser.key.urlsafe() }}">
+                    <input type="hidden" name="post" value="{{ i.key.urlsafe() }}">
+                  </form>
                 </div>
               </div>
               {% endfor %}

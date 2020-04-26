@@ -1,5 +1,6 @@
 #imports
 from google.appengine.ext import ndb
+from comments import Comments
 
 #User class
 class User(ndb.Model):
@@ -15,6 +16,6 @@ class Posts(ndb.Model):
     #posts attributes
     image = ndb.BlobKeyProperty()
     caption = ndb.StringProperty()
-    comments = ndb.StringProperty()
+    comments = ndb.StructuredProperty(Comments, repeated=True)
     user = ndb.KeyProperty(kind='User')
     create_date = ndb.DateTimeProperty(auto_now_add=True)

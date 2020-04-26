@@ -34,7 +34,7 @@
         <div class="jumbotron">
           <h1 class="display-4">Hello!</h1>
           <p class="lead">This is a simplified replica of Instagram</p>
-          <hr class="my-4">
+          <hr class="my-2">
           {% if user %}
           <p>{{ welcome }} {{ user.email() }} to the application.</p>
           {% else %}
@@ -45,20 +45,32 @@
             <a class="btn btn-lg btn-outline-dark" href="{{ url }}">{{ url_string }}</a>
           </p>
         </div>
-        <!-- cards with links to create taskboard and view taskboards -->
-        <div class="">
+        <!-- posts -->
+        <section>
           {% for i in posts|sort(reverse=true, attribute='create_date') %}
           {% if loop.index <= 50 %}
           <div class="card mx-auto p-4 my-4" style="width: 28rem;">
             <img src="{{ get_serving_url(i.image) }}" class="card-img-top" alt="images">
             <div class="card-body">
-              <p class="card-text">{{ i.user.get().email_address }}: {{ i.caption }}</p>
-              <p>Comments:</p>
+              <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.caption }}</p>
+              {% for i in i.comments|sort(reverse=true, attribute='create_date') %}
+              <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>
+              {% endfor %}
+              <form action="/comment" method="post">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="comment" placeholder="Add a comment..." aria-label="Comment" aria-describedby="button-addon2" maxlength="200">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" name="Button" value="Comment"id="button-addon2">Post</button>
+                  </div>
+                </div>
+                <input type="hidden" name="key" value="{{ myuser.key.urlsafe() }}">
+                <input type="hidden" name="post" value="{{ i.key.urlsafe() }}">
+              </form>
             </div>
           </div>
           {% endif %}
           {% endfor %}
-        </div>
+        </section>
 
       </main>
     </div>

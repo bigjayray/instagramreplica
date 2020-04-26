@@ -16,6 +16,7 @@ from search import Search
 from follow import Follow
 from followers import Followers
 from following import Following
+from comment import Comment
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -96,5 +97,6 @@ app = webapp2.WSGIApplication([
     ('/search', Search),
     ('/follow', Follow),
     ('/followers', Followers),
-    ('/following', Following)
+    ('/following', Following),
+    ('/comment', Comment)
 ], debug=True)
