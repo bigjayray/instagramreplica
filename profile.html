@@ -35,7 +35,7 @@
           <h5 class="card-header">{{ muser.email_address }}
             {% if muser != myuser %}
               {% if following %}
-                <a class="btn btn-primary disabled" href="#">Following</a>
+                <a class="btn btn-primary" href="/unfollow?me={{ myuser.key.urlsafe() }}&you={{ muser.key.urlsafe() }}">Unfollow</a>
               {% else %}
                 <a class="btn btn-primary" href="/follow?me={{ myuser.key.urlsafe() }}&you={{ muser.key.urlsafe() }}">Follow</a>
               {% endif %}

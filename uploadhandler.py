@@ -32,4 +32,4 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
         myuser.put()
 
-        self.redirect('/')
+        self.redirect('/profile?key='+myuser_key.urlsafe())

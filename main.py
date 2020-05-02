@@ -14,6 +14,7 @@ from uploadhandler import UploadHandler
 from profile import Profile
 from search import Search
 from follow import Follow
+from unfollow import Unfollow
 from followers import Followers
 from following import Following
 from comment import Comment
@@ -97,6 +98,7 @@ app = webapp2.WSGIApplication([
     ('/profile', Profile),
     ('/search', Search),
     ('/follow', Follow),
+    ('/unfollow', Unfollow),
     ('/followers', Followers),
     ('/following', Following),
     ('/comment', Comment),
