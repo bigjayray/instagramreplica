@@ -11,6 +11,7 @@ class User(ndb.Model):
     followers = ndb.KeyProperty(kind='User', repeated=True)
     posts = ndb.KeyProperty(kind='Posts', repeated=True)
 
+#Posts class
 class Posts(ndb.Model):
     # A model for representing a post
     #posts attributes

@@ -31,6 +31,7 @@
         </nav>
       </header>
       <main>
+        <!-- card to hold user posts -->
         <div class="card">
           <h5 class="card-header">{{ muser.email_address }}
             {% if muser != myuser %}
@@ -45,6 +46,7 @@
             <h5 class="card-title">Posts: {{ nposts }} <span class="px-4">Followers: <a href="/followers?key={{ muser.key.urlsafe() }}">{{ nfollowers }}</a></span><span>Following:<a href="/following?key={{ muser.key.urlsafe() }}">{{ nfollowing }}</a></span></h5>
             <p class="card-text"></p>
             <div class="row p-2">
+              <!-- posts displayed in reverse chronological order -->
               {% for i in posts|sort(reverse=true, attribute='create_date') %}
               <div class="card col-sm-4 p-4" style="width: 18rem;">
                 <img src="{{ get_serving_url(i.image) }}" class="card-img-top img-fluid" alt="images">
@@ -55,6 +57,7 @@
                   <p><a href="/post?key={{ i.key.urlsafe() }}" class="text-muted">View all comments</a></p>
                   {% endif %}
 
+                  <!-- comments displayed in reverse chronological order -->
                   {% for i in i.comments|sort(reverse=true, attribute='create_date') %}
                   {% if loop.index <= 5 %}
                   <p class="card-text"><span class="font-weight-bold">{{ i.user.get().email_address }}</span> {{ i.comment }}</p>

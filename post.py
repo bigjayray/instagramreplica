@@ -22,13 +22,12 @@ class Post(webapp2.RequestHandler):
         user = users.get_current_user()
         myuser = ndb.Key('User', user.user_id()).get()
 
-        # gets user
+        # gets post key
         k_str = self.request.get('key')
         key = ndb.Key(urlsafe=k_str)
-
+        
+        # gets post
         post = key.get()
-
-
 
         #assign template values to be rendered to the html page
         template_values = {

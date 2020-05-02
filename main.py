@@ -68,8 +68,6 @@ class MainPage(webapp2.RequestHandler):
                     posts.append(i)
             for i in myuser.posts:
                 posts.append(i.get())
-
-
         else:
             url = users.create_login_url(self.request.uri)
             url_string = 'login'

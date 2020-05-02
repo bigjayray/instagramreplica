@@ -53,13 +53,19 @@ class Search(webapp2.RequestHandler):
             #querys data store to find all users
             result = User.query().filter(User.email_address == username).fetch()
 
+            error = False
+            if result == []:
+                error = True
+
+            #gets current user
             myuser = ndb.Key('User', user.user_id()).get()
 
             #assign template values to be rendered to the html page
             template_values = {
                 'user' : user,
                 'result' : result,
-                'myuser' : myuser
+                'myuser' : myuser,
+                'error' : error
             }
 
             template = JINJA_ENVIRONMENT.get_template('search.html')

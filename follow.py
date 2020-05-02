@@ -21,19 +21,21 @@ class Follow(webapp2.RequestHandler):
         #gets current user
         user = users.get_current_user()
 
-        # gets values
+        # gets keys
         k_str_me = self.request.get('me')
         k_str_you = self.request.get('you')
 
         key_me = ndb.Key(urlsafe=k_str_me)
         key_you = ndb.Key(urlsafe=k_str_you)
 
+        #updates following/followers
         me = key_me.get()
         me.following.append(key_you)
 
         you = key_you.get()
         you.followers.append(key_me)
 
+        #updates users
         me.put()
         you.put()
 

@@ -20,12 +20,14 @@ class Following(webapp2.RequestHandler):
         #gets current user
         user = users.get_current_user()
 
-        # gets user
+        # gets user key
         k_str = self.request.get('key')
         key = ndb.Key(urlsafe=k_str)
 
+        # gets user
         muser = key.get()
 
+        # gets following
         following = muser.following
 
         myuser = ndb.Key('User', user.user_id()).get()

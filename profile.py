@@ -21,14 +21,16 @@ class Profile(webapp2.RequestHandler):
         #gets current user
         user = users.get_current_user()
 
-        # gets user
+        # gets user key
         k_str = self.request.get('key')
         key = ndb.Key(urlsafe=k_str)
 
         muser = key.get()
 
+        #gets posts
         posts = ndb.get_multi(muser.posts)
 
+        # calculates stats
         nposts = len(muser.posts)
         nfollowers = len(muser.followers)
         nfollowing = len(muser.following)

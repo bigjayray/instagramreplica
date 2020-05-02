@@ -28,6 +28,7 @@ class Unfollow(webapp2.RequestHandler):
         key_me = ndb.Key(urlsafe=k_str_me)
         key_you = ndb.Key(urlsafe=k_str_you)
 
+        #removes user from following/followers
         me = key_me.get()
         index = 0
         for i in me.following:
@@ -42,7 +43,10 @@ class Unfollow(webapp2.RequestHandler):
                 del you.followers[index]
             index += 1
 
+        #updates both users
         me.put()
         you.put()
 
+
+        #redirects to profile page
         self.redirect('/profile?key='+k_str_you)

@@ -21,15 +21,22 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
         #generates user from key
         myuser = myuser_key.get()
 
+        #creates post object
         post = Posts()
 
+        #adds form values
         post.image = upload.key()
         post.caption = self.request.get('caption')
         post.user = myuser_key
+
+        #stores key
         post_key = post.put()
 
+        #adds post to user
         myuser.posts.append(post_key)
 
+        #updates user
         myuser.put()
 
+        #redirect user to profile page
         self.redirect('/profile?key='+myuser_key.urlsafe())

@@ -24,15 +24,20 @@ class Comment(webapp2.RequestHandler):
         post_key = ndb.Key(urlsafe=post_k_str)
         post = post_key.get()
 
+        # gets key
         k_str = self.request.get('key')
         key = ndb.Key(urlsafe=k_str)
 
+        # creates new comment object
         new_comment = Comments()
 
+        #updates comment attributes
         new_comment.comment = self.request.get('comment')
         new_comment.user = key
 
         post.comments.append(new_comment)
+
+        # updates post
         post.put()
 
         self.redirect('/')
